@@ -1,0 +1,25 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: openmetadata-dependencies-dags-pvc
+  namespace: openmetadata
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: azurefile-csi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: openmetadata-dependencies-logs-pvc
+  namespace: openmetadata
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: azurefile-csi

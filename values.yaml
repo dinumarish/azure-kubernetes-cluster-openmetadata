@@ -1,0 +1,4 @@
+global:
+  pipelineServiceClientConfig:
+    apiEndpoint: http://openmetadata-dependencies-web..svc.cluster.local:8080
+    metadataApiEndpoint: http://openmetadata..svc.cluster.local:8585/apii

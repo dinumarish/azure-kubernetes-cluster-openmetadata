@@ -1,0 +1,32 @@
+airflow:
+  airflow:
+    extraVolumeMounts:
+      - mountPath: /airflow-logs
+        name: aks-airflow-logs
+      - mountPath: /airflow-dags/dags
+        name: aks-airflow-dags
+    extraVolumes:
+      - name: aks-airflow-logs
+        persistentVolumeClaim:
+          claimName: openmetadata-dependencies-logs-pvc
+      - name: aks-airflow-dags
+        persistentVolumeClaim:
+          claimName: openmetadata-dependencies-dags-pvc
+    config:
+      AIRFLOW__OPENMETADATA_AIRFLOW_APIS__DAG_GENERATED_CONFIGS: "/airflow-dags/dags"
+  dags:
+    path: /airflow-dags/dags
+    persistence:
+      enabled: false
+  logs:
+    path: /airflow-logs
+    persistence:
+      enabled: false
+  # externalDatabase:
+  #   type: mysql
+  #   host: mysql..svc.cluster.local
+  #   port: 3306
+  #   database: airflow_db
+  #   user: airflow_user
+  #   passwordSecret: airflow-mysql-secrets
+  #   passwordSecretKey: airflow-mysql-password

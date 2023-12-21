@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  creationTimestamp: null
+  labels:
+    run: my-permission-pod
+  name: my-permission-pod
+  namespace: openmetadata
+spec:
+  template:
+    spec:
+      containers:
+      - image: busybox
+        name: my-permission-pod
+        volumeMounts:
+        - name: airflow-dags
+          mountPath: /airflow-dags
+        - name: airflow-logs
+          mountPath: /airflow-logs
+        command: ["/bin/sh", "-c", "chown -R 50000 /airflow-dags /airflow-logs", "chmod -R a+rwx /airflow-dags"]
+      restartPolicy: Never
+      volumes:
+      - name: airflow-logs
+        persistentVolumeClaim:
+          claimName: openmetadata-dependencies-logs-pvc
+      - name: airflow-dags
+        persistentVolumeClaim:
+          claimName: openmetadata-dependencies-dags-pvc

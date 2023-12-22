@@ -22,11 +22,12 @@ airflow:
     path: /airflow-logs
     persistence:
       enabled: false
-  # externalDatabase:
-  #   type: mysql
-  #   host: mysql..svc.cluster.local
-  #   port: 3306
-  #   database: airflow_db
-  #   user: airflow_user
-  #   passwordSecret: airflow-mysql-secrets
-  #   passwordSecretKey: airflow-mysql-password
+  externalDatabase:
+    type: postgres
+    # host: hostaddress
+    # database: dbname
+    # user: dbusername
+    port: 5432
+    dbUseSSL: true
+    passwordSecret: postgresql-secret
+    passwordSecretKey: postgresql-password

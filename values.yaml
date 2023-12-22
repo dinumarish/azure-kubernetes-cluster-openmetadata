@@ -2,3 +2,17 @@ global:
   pipelineServiceClientConfig:
     apiEndpoint: http://openmetadata-dependencies-web..svc.cluster.local:8080
     metadataApiEndpoint: http://openmetadata..svc.cluster.local:8585/apii
+
+openmetadata:
+  config:
+    database:
+      #host: 
+      port: 5432
+      driverClass: org.postgresql.Driver
+      dbScheme: postgresql
+      #databaseName: 
+      auth:
+        #username: 
+        password:
+          secretRef: postgresql-secret
+          secretKey: postgresql-password

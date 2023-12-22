@@ -6,15 +6,15 @@ The repository contains files to set-up Openmetadata on Azure Kubernetes Service
 ### Step 1 - Create a AKS cluster
 This step is optional. Openmetadata can also be deployed to an existing AKS cluster.
 ```azure-cli
-az aks create   --resource-group  MyResourceGroup
-                --name MyAKSClusterName 
-                --nodepool-name agentpool 
-                --outbound-type loadbalancer 
-                --location germanywestcentral 
-                --generate-ssh-keys 
-    	        --kubernetes-version 1.25.15 
-		        --node-count 1 
-		        --enable-addons monitoring 
+az aks create   --resource-group  MyResourceGroup    \
+                --name MyAKSClusterName              \
+                --nodepool-name agentpool            \
+                --outbound-type loadbalancer         \
+                --location germanywestcentral        \
+                --generate-ssh-keys                  \
+    	        --kubernetes-version 1.25.15         \
+		        --node-count 1                       \
+		        --enable-addons monitoring           \
 		        --aks-custom-headers EnableAzureDiskFileCSIDriver=true
 ```
 For existing cluster it is important to enable the CSI storage drivers
@@ -48,16 +48,16 @@ helm repo add open-metadata https://helm.open-metadata.org/
 The official documentation of openmetadata recommends setting up external database for the metadata and search. The folowing implementation uses external postgresql DB from Azure Database.
 
 ```azure-cli
-kubectl create secret generic airflow-secrets 
-                    --namespace openmetadata 
+kubectl create secret generic airflow-secrets                                    \
+                    --namespace openmetadata                                     \
                     --from-literal=openmetadata-airflow-password=<AdminPassword> 
 ```
 For production deployments connecting external postgresql database provide external database connection details by settings up appropriate secrets as below to use in manifests.
 
 ```azure-cli
-kubectl create secret generic postgresql-secret
-                                --namespace openmetadata
-                                --from-literal=postgresql-password=<MyPGDBPassword>
+kubectl create secret generic postgresql-secret                                       \
+                                --namespace openmetadata                              \
+                                --from-literal=postgresql-password=<MyPGDBPassword>   
  
 ```
 
@@ -66,12 +66,12 @@ The values-dependencies-yaml is used to overwride default values in the official
 
 ```azure-cli
 helm install openmetadata-dependencies open-metadata/openmetadata-dependencies  
-                            --values values-dependencies.yaml 
-                            --namespace openmetadata 
-                            --set mysql.enabled=false 
-                            --set airflow.externalDatabase.host=<MyDBHostAddress> 
-                            --set airflow.externalDatabase.user=<MyDBUser> 
-                            --set airflow.externalDatabase.database=<MyDBUser> 
+                            --values values-dependencies.yaml                           \
+                            --namespace openmetadata                                    \
+                            --set mysql.enabled=false                                   \
+                            --set airflow.externalDatabase.host=<MyDBHostAddress>       \
+                            --set airflow.externalDatabase.user=<MyDBUser>              \
+                            --set airflow.externalDatabase.database=<MyDBUser>          
 
 ```
 
@@ -101,12 +101,12 @@ opensearch-0                                               1/1     Running   0  
 ### Step 7 - Install Openmetadata
 Finally install Openmetadata and customizing the apiEndpoints using the `values.yaml` file and set sensitive information like host address, db name and username through the CLI to avoid pushing the information into the repository.
 ```azure-cli
-helm install openmetadata open-metadata/openmetadata    
-                            --values values.yaml
-                            --namespace openmetadata 
-                            --set openmetadata.config.database.host=<MyDBHostAddress>
-                            --set openmetadata.config.database.databaseName=<MyDBName>
-                            --set openmetadata.config.database.auth.username=<MyDBUser>
+helm install openmetadata open-metadata/openmetadata    \
+                            --values values.yaml        \
+                            --namespace openmetadata    \
+                            --set openmetadata.config.database.host=<MyDBHostAddress>   \
+                            --set openmetadata.config.database.databaseName=<MyDBName>  \
+                            --set openmetadata.config.database.auth.username=<MyDBUser> \
                                                        
  ```
 ### Step 8 - Launch Openmetadata UI

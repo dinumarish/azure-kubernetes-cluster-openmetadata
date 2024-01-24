@@ -62,16 +62,15 @@ kubectl create secret generic postgresql-secret                                 
 ```
 
 ### Step 6 - Install Openmetadata dependencies
-The values-dependencies-yaml is used to overwride default values in the official helm chart and must be configured for customizing for use cases. Uncomment the externalDatabase section with meaningful values to connect to external database for production deployments. We set sensitive information like host address, DB name and DB username through the CLI
+The values-dependencies-yaml is used to overwride default values in the official helm chart and must be configured for customizing for use cases. Uncomment the externalDatabase section with meaningful values to connect to external database for production deployments. This example case uses a postgresql server but any of the popular database server could be deployed. We set sensitive information like and DB username through the CLI
 
 ```azure-cli
 helm install openmetadata-dependencies open-metadata/openmetadata-dependencies  
                             --values values-dependencies.yaml                           \
                             --namespace openmetadata                                    \
                             --set mysql.enabled=false                                   \
-                            --set airflow.externalDatabase.host=<MyDBHostAddress>       \
                             --set airflow.externalDatabase.user=<MyDBUser>              \
-                            --set airflow.externalDatabase.database=<MyDBUser>          
+                                
 
 ```
 
@@ -104,8 +103,6 @@ Finally install Openmetadata and customizing the apiEndpoints using the `values.
 helm install openmetadata open-metadata/openmetadata    \
                             --values values.yaml        \
                             --namespace openmetadata    \
-                            --set openmetadata.config.database.host=<MyDBHostAddress>   \
-                            --set openmetadata.config.database.databaseName=<MyDBName>  \
                             --set openmetadata.config.database.auth.username=<MyDBUser> \
                                                        
  ```

@@ -24,8 +24,8 @@ airflow:
       enabled: false
   externalDatabase:
     type: postgres
-    # host: hostaddress
-    # database: dbname
+    host: hostaddress
+    database: dbname
     # user: dbusername
     port: 5432
     dbUseSSL: true

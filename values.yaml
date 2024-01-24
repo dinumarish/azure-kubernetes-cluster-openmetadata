@@ -6,11 +6,11 @@ global:
 openmetadata:
   config:
     database:
-      #host: 
+      host: pg_db_host_server
       port: 5432
       driverClass: org.postgresql.Driver
       dbScheme: postgresql
-      #databaseName: 
+      databaseName: openmetadatadb
       auth:
         #username: 
         password:
